@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polytechnic CGPA Calculator - 2022 Curriculum</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 Polytechnic CGPA Calculator</h1>
+            <p class="subtitle">Bangladesh Diploma Engineering - 2022 Curriculum</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="standard">Standard Calculator</button>
+            <button class="tab-btn" data-tab="target">Target Calculator</button>
+        </nav>
+
+        <!-- Standard Calculator Section -->
+        <section id="standard" class="calculator-section active">
+            <div class="card">
+                <h2>Standard CGPA Calculator</h2>
+                <p class="description">Enter your GPA for each semester to calculate your final CGPA.</p>
+                
+                <form id="standard-form">
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="sem1">Semester 1 (5%)</label>
+                            <input type="number" id="sem1" min="0" max="4" step="0.01" placeholder="0.00 - 4.00">
+                        </div>
+                        <div class="input-group">
+                            <label for="sem2">Semester 2 (5%)</label>
+                            <input type="number" id="sem2" min="0" max="4" step="0.01" placeholder="0.00 - 4.00">
+                        </div>
+                        <div class="input-group">
+                            <label for="sem3">Semester 3 (10%)</label>
+                            <input type="number" id="sem3" min="0" max="4" step="0.01" placeholder="0.00 - 4.00">
+                        </div>
+                        <div class="input-group">
+                            <label for="sem4">Semester 4 (10%)</label>
+                            <input type="number" id="sem4" min="0" max="4" step="0.01" placeholder="0.00 - 4.00">
+                        </div>
+                        <div class="input-group">
+                            <label for="sem5">Semester 5 (20%)</label>
+                            <input type="number" id="sem5" min="0" max="4" step="0.01" placeholder="0.00 - 4.00">
+                        </div>
+                        <div class="input-group">
+                            <label for="sem6">Semester 6 (20%)</label>
+                            <input type="number" id="sem6" min="0" max="4" step="0.01" placeholder="0.00 - 4.00">
+                        </div>
+                        <div class="input-group">
+                            <label for="sem7">Semester 7 (20%)</label>
+                            <input type="number" id="sem7" min="0" max="4" step="0.01" placeholder="0.00 - 4.00">
+                        </div>
+                        <div class="input-group">
+                            <label for="sem8">Semester 8 (10%)</label>
+                            <input type="number" id="sem8" min="0" max="4" step="0.01" placeholder="0.00 - 4.00">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Calculate CGPA</button>
+                    <button type="button" class="btn-secondary" id="reset-standard">Reset</button>
+                </form>
+
+                <div id="standard-result" class="result-container hidden">
+                    <div class="cgpa-display">
+                        <span class="cgpa-label">Final CGPA</span>
+                        <span class="cgpa-value" id="final-cgpa">0.00</span>
+                        <span class="cgpa-scale">out of 4.00</span>
+                    </div>
+                    
+                    <div class="breakdown">
+                        <h3>Contribution Breakdown</h3>
+                        <div id="breakdown-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Target Calculator Section -->
+        <section id="target" class="calculator-section">
+            <div class="card">
+                <h2>Reverse / Target CGPA Calculator</h2>
+                <p class="description">Find out what GPA you need in remaining semesters to achieve your target CGPA.</p>
+                
+                <form id="target-form">
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="target-sem1">Semester 1 (5%)</label>
+                            <input type="number" class="completed-gpa" min="0" max="4" step="0.01" placeholder="Your GPA or leave empty">
+                        </div>
+                        <div class="input-group">
+                            <label for="target-sem2">Semester 2 (5%)</label>
+                            <input type="number" class="completed-gpa" min="0" max="4" step="0.01" placeholder="Your GPA or leave empty">
+                        </div>
+                        <div class="input-group">
+                            <label for="target-sem3">Semester 3 (10%)</label>
+                            <input type="number" class="completed-gpa" min="0" max="4" step="0.01" placeholder="Your GPA or leave empty">
+                        </div>
+                        <div class="input-group">
+                            <label for="target-sem4">Semester 4 (10%)</label>
+                            <input type="number" class="completed-gpa" min="0" max="4" step="0.01" placeholder="Your GPA or leave empty">
+                        </div>
+                        <div class="input-group">
+                            <label for="target-sem5">Semester 5 (20%)</label>
+                            <input type="number" class="completed-gpa" min="0" max="4" step="0.01" placeholder="Your GPA or leave empty">
+                        </div>
+                        <div class="input-group">
+                            <label for="target-sem6">Semester 6 (20%)</label>
+                            <input type="number" class="completed-gpa" min="0" max="4" step="0.01" placeholder="Your GPA or leave empty">
+                        </div>
+                        <div class="input-group">
+                            <label for="target-sem7">Semester 7 (20%)</label>
+                            <input type="number" class="completed-gpa" min="0" max="4" step="0.01" placeholder="Your GPA or leave empty">
+                        </div>
+                        <div class="input-group">
+                            <label for="target-sem8">Semester 8 (10%)</label>
+                            <input type="number" class="completed-gpa" min="0" max="4" step="0.01" placeholder="Your GPA or leave empty">
+                        </div>
+                    </div>
+                    
+                    <div class="target-input-group">
+                        <label for="target-cgpa">Target CGPA</label>
+                        <input type="number" id="target-cgpa" min="0" max="4" step="0.01" placeholder="e.g., 3.50" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Calculate Required GPA</button>
+                    <button type="button" class="btn-secondary" id="reset-target">Reset</button>
+                </form>
+
+                <div id="target-result" class="result-container hidden">
+                    <div class="target-display">
+                        <span class="target-label">Required Average GPA</span>
+                        <span class="target-value" id="required-gpa">0.00</span>
+                        <span class="target-scale">for remaining semesters</span>
+                    </div>
+                    
+                    <div id="target-message" class="message"></div>
+                    
+                    <div class="target-breakdown">
+                        <h3>Analysis</h3>
+                        <div id="target-analysis"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Made by Diplomabyte | <a href="https://diplomabyte.vercel.app" target="_blank" rel="noopener noreferrer">diplomabyte.vercel.app</a></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

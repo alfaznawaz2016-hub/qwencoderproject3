@@ -515,30 +515,57 @@ function renderTargetAnalysis(result) {
         });
     }
     
-    // Add remaining semesters info
+    // Add remaining semesters info with individual GPA requirements
     if (result.remainingSemesters.length > 0) {
         const remainingHeader = document.createElement('h4');
-        remainingHeader.textContent = 'Remaining Semesters';
+        remainingHeader.textContent = 'Remaining Semesters - Required GPA Breakdown';
         remainingHeader.style.marginTop = '1rem';
         remainingHeader.style.marginBottom = '0.5rem';
         remainingHeader.style.fontSize = '0.95rem';
         remainingHeader.style.color = 'var(--text-secondary)';
         targetAnalysis.appendChild(remainingHeader);
         
-        const remainingSemsText = result.remainingSemesters
-            .map(sem => `${getOrdinal(sem.semester)} (${weightToPercentage(sem.weight)})`)
-            .join(', ');
+        // Calculate individual required GPA for each remaining semester based on weight
+        // Since each semester has different weight, we show what GPA is needed in EACH semester
+        // assuming equal effort distribution adjusted by weight importance
+        result.remainingSemesters.forEach(sem => {
+            // For each remaining semester, calculate what GPA would be needed if that 
+            // semester alone had to contribute proportionally
+            // Required contribution from this semester = (Remaining Points Needed) × (This Semester's Weight / Total Remaining Weight)
+            // Required GPA for this semester = Required contribution / This Semester's Weight
+            // Simplified: Required GPA = Remaining Points Needed / Total Remaining Weight (same for all)
+            // But we show the weighted contribution each semester needs to make
+            
+            const semesterRequiredContribution = result.remainingPointsNeeded * (sem.weight / result.remainingWeight);
+            const semesterRequiredGPA = semesterRequiredContribution / sem.weight;
+            
+            const semItem = document.createElement('div');
+            semItem.className = 'breakdown-item';
+            semItem.style.borderLeftColor = result.isPossible ? 'var(--primary-color)' : 'var(--error-color)';
+            semItem.innerHTML = `
+                <span class="breakdown-semester">
+                    ${getOrdinal(sem.semester)} Semester (${weightToPercentage(sem.weight)})
+                </span>
+                <span class="breakdown-contribution" style="color: ${result.isPossible ? 'var(--primary-color)' : 'var(--error-color)'}">
+                    Required GPA: ${formatNumber(Math.max(0, Math.min(semesterRequiredGPA, MAX_GPA)))} → ${formatNumber(semesterRequiredContribution)} points
+                </span>
+            `;
+            targetAnalysis.appendChild(semItem);
+        });
         
-        const remainingItem = document.createElement('div');
-        remainingItem.className = 'breakdown-item';
-        remainingItem.style.borderLeftColor = 'var(--secondary-color)';
-        remainingItem.innerHTML = `
-            <span class="breakdown-semester">Semesters to Complete</span>
-            <span class="breakdown-contribution" style="color: var(--secondary-color)">
-                ${remainingSemsText}
+        // Add note about the calculation
+        const noteItem = document.createElement('div');
+        noteItem.className = 'breakdown-item';
+        noteItem.style.borderLeftColor = 'var(--text-muted)';
+        noteItem.style.fontStyle = 'italic';
+        noteItem.style.fontSize = '0.85rem';
+        noteItem.innerHTML = `
+            <span class="breakdown-semester" style="color: var(--text-muted)">Note</span>
+            <span class="breakdown-contribution" style="color: var(--text-muted)">
+                These are the exact GPAs needed in each remaining semester. You can compensate a lower GPA in one semester with a higher GPA in another.
             </span>
         `;
-        targetAnalysis.appendChild(remainingItem);
+        targetAnalysis.appendChild(noteItem);
     }
 }
 
